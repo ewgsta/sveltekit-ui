@@ -167,8 +167,20 @@
 	</section>
 </div>
 
-<Dialog {open} title="Örnek İletişim" onclose={() => (open = false)}>
-	<p>İçerik buraya gelir.</p>
+<Dialog
+	{open}
+	title="Örnek İletişim"
+	description="Form alanı ve buton varyasyonları"
+	onclose={() => (open = false)}
+>
+	<label>
+		<Label>Mesaj</Label>
+		<Input placeholder="Bir şeyler yaz…" autofocus />
+	</label>
+	<div class="dialog-actions">
+		<Button variant="outline" onclick={() => (open = false)}>Vazgeç</Button>
+		<Button onclick={() => (open = false)}>Gönder</Button>
+	</div>
 </Dialog>
 
 <Sonner />
@@ -228,5 +240,12 @@
 
 	:global([data-slot='toggle']) {
 		width: fit-content;
+	}
+
+	.dialog-actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: 8px;
+		margin-top: 4px;
 	}
 </style>

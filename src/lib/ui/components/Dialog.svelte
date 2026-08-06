@@ -20,6 +20,25 @@
 		children?: Snippet;
 	} = $props();
 
+	let visible = $state(false);
+	let closing = $state(false);
+
+	$effect(() => {
+		if (open && !visible) {
+			visible = true;
+			closing = false;
+			return;
+		}
+		if (!open && visible) {
+			closing = true;
+			const t = setTimeout(() => {
+				visible = false;
+				closing = false;
+			}, 220);
+			return () => clearTimeout(t);
+		}
+	});
+
 	function close() {
 		onclose?.();
 	}
@@ -29,23 +48,32 @@
 	}
 </script>
 
-{#if open}
-	<div class="dialog-root">
+{#if visible}
+	<div class="dialog-root" class:dialog-root--closing={closing}>
 		<div class="dialog-overlay" role="presentation" onclick={onClickBackdrop}>
 			<div
 				class={`dialog ${className}`}
+				class:dialog--closing={closing}
 				data-slot="dialog-content"
 				role="dialog"
 				aria-modal="true"
 				aria-label={title || undefined}
 			>
-				{#if title}<h2 class="dialog-title">{title}</h2>{/if}
-				{#if description}
-					<p class="dialog-description">{description}</p>
-				{/if}
+				<div class="dialog-header">
+					{#if title}<h2 class="dialog-title">{title}</h2>{/if}
+					{#if description}
+						<p class="dialog-description">{description}</p>
+					{/if}
+				</div>
 				<div class="dialog-body">{@render children?.()}</div>
 				{#if closeButton}
-					<button class="dialog-close" data-slot="dialog-close" onclick={close} aria-label="Kapat">
+					<button
+						class="dialog-close"
+						data-slot="dialog-close"
+						onclick={close}
+						aria-label="Kapat"
+						title="Kapat"
+					>
 						<X size={16} />
 					</button>
 				{/if}
@@ -68,14 +96,18 @@
 		place-items: center;
 		padding: var(--space-6);
 		background: rgb(0 0 0 / 0.5);
-		animation: dialog-fade 0.15s ease both;
+		animation: dialog-fade-in 0.2s ease both;
+	}
+
+	.dialog-root--closing .dialog-overlay {
+		animation: dialog-fade-out 0.2s ease forwards;
 	}
 
 	.dialog {
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		gap: 16px;
+		gap: 20px;
 		width: 100%;
 		max-width: 32rem;
 		border-radius: var(--radius-lg);
@@ -85,13 +117,25 @@
 		box-shadow:
 			0 10px 15px -3px rgb(0 0 0 / 0.1),
 			0 4px 6px -4px rgb(0 0 0 / 0.1);
-		animation: dialog-pop 0.15s ease both;
+		animation: dialog-pop-in 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+	}
+
+	.dialog--closing {
+		animation: dialog-pop-out 0.16s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+	}
+
+	.dialog-header {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding-right: 24px;
 	}
 
 	.dialog-title {
+		margin: 0;
 		font-size: 1.125rem;
 		font-weight: 600;
-		line-height: 1;
+		line-height: 1.2;
 	}
 
 	.dialog-description {
@@ -108,8 +152,8 @@
 
 	.dialog-close {
 		position: absolute;
-		top: 16px;
-		right: 16px;
+		top: 20px;
+		right: 20px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -120,15 +164,22 @@
 		background: transparent;
 		color: var(--muted-foreground);
 		cursor: pointer;
-		opacity: 0.7;
-		transition: opacity 0.15s ease;
+		transition:
+			background-color 0.15s ease,
+			color 0.15s ease;
 	}
 
 	.dialog-close:hover {
-		opacity: 1;
+		background: color-mix(in srgb, var(--foreground) 8%, transparent);
+		color: var(--foreground);
 	}
 
-	@keyframes dialog-fade {
+	.dialog-close:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 50%, transparent);
+	}
+
+	@keyframes dialog-fade-in {
 		from {
 			opacity: 0;
 		}
@@ -137,14 +188,34 @@
 		}
 	}
 
-	@keyframes dialog-pop {
+	@keyframes dialog-fade-out {
+		from {
+			opacity: 1;
+		}
+		to {
+			opacity: 0;
+		}
+	}
+
+	@keyframes dialog-pop-in {
 		from {
 			opacity: 0;
-			transform: scale(0.95);
+			transform: scale(0.96) translateY(6px);
 		}
 		to {
 			opacity: 1;
-			transform: scale(1);
+			transform: scale(1) translateY(0);
+		}
+	}
+
+	@keyframes dialog-pop-out {
+		from {
+			opacity: 1;
+			transform: scale(1) translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: scale(0.97) translateY(4px);
 		}
 	}
 </style>
