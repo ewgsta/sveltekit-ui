@@ -29,6 +29,9 @@
 	} from '$lib/ui';
 
 	let open = $state(false);
+	let dlgText = $state(false);
+	let dlgInput = $state(false);
+	let dlgButtons = $state(false);
 	let tab = $state('form');
 	let volume = $state(60);
 	let progress = $state(55);
@@ -158,6 +161,15 @@
 			</CardFooter>
 		</Card>
 
+		<section>
+			<h2>Diyaloglar (İletişim)</h2>
+			<div class="row">
+				<Button variant="outline" onclick={() => (dlgText = true)}>Metin</Button>
+				<Button variant="outline" onclick={() => (dlgInput = true)}>Metin kutusu</Button>
+				<Button variant="outline" onclick={() => (dlgButtons = true)}>Buton</Button>
+			</div>
+		</section>
+
 		<Accordion
 			items={[
 				{ title: 'Değişkenler', content: snippetVars },
@@ -180,6 +192,35 @@
 	<div class="dialog-actions">
 		<Button variant="outline" onclick={() => (open = false)}>Vazgeç</Button>
 		<Button onclick={() => (open = false)}>Gönder</Button>
+	</div>
+</Dialog>
+
+<Dialog open={dlgText} title="Basit İletişim" onclose={() => (dlgText = false)}>
+	<p>Normal yazılı içerik buraya gelir.</p>
+</Dialog>
+
+<Dialog
+	open={dlgInput}
+	title="Metin Kutusu"
+	description="Tek alanlı varyasyon"
+	onclose={() => (dlgInput = false)}
+>
+	<label>
+		<Label>Başlık</Label>
+		<Input placeholder="Anime adı" />
+	</label>
+</Dialog>
+
+<Dialog
+	open={dlgButtons}
+	title="Onayla"
+	description="Butonlu varyasyon"
+	onclose={() => (dlgButtons = false)}
+>
+	<p>Bu işlemi gerçekleştirmek istediğine emin misin?</p>
+	<div class="dialog-actions">
+		<Button variant="outline" onclick={() => (dlgButtons = false)}>Vazgeç</Button>
+		<Button onclick={() => (dlgButtons = false)}>Onayla</Button>
 	</div>
 </Dialog>
 
