@@ -16,7 +16,27 @@
 	} = $props();
 
 	let open = $state(false);
+	let visible = $state(false);
+	let closing = $state(false);
 	let rootEl: HTMLDivElement;
+
+	$effect(() => {
+		if (open && !visible) {
+			visible = true;
+			closing = false;
+			return;
+		}
+		if (!open && visible) {
+			closing = true;
+			const t = setTimeout(() => {
+				visible = false;
+				closing = false;
+			}, 180);
+			return () => {
+				clearTimeout(t);
+			};
+		}
+	});
 
 	$effect(() => {
 		if (!open) return;
@@ -54,9 +74,10 @@
 	>
 		{@render trigger()}
 	</div>
-	{#if open}
+	{#if visible}
 		<div
 			class={`popover-panel popover-panel--${side} popover-panel--${align}`}
+			class:popover-panel--closing={closing}
 			role="dialog"
 			tabindex="-1"
 		>
@@ -115,6 +136,10 @@
 		right: 0;
 	}
 
+	.popover-panel--closing {
+		animation: popover-out 0.18s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+	}
+
 	@keyframes popover-in {
 		from {
 			opacity: 0;
@@ -123,6 +148,17 @@
 		to {
 			opacity: 1;
 			transform: scale(1) translateY(0);
+		}
+	}
+
+	@keyframes popover-out {
+		from {
+			opacity: 1;
+			transform: scale(1) translateY(0);
+		}
+		to {
+			opacity: 0;
+			transform: scale(0.98) translateY(-3px);
 		}
 	}
 </style>

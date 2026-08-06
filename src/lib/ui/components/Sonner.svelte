@@ -106,7 +106,7 @@
 		padding: 0.75rem 0.875rem 0.75rem 1rem;
 		border-radius: var(--radius-lg);
 		border: 1px solid var(--border);
-		background: var(--sidebar);
+		background: var(--background);
 		color: var(--foreground);
 		box-shadow:
 			0 10px 15px -3px rgb(0 0 0 / 0.1),
