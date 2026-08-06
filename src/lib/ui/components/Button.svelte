@@ -79,8 +79,9 @@
 	}
 
 	.button--outline {
-		border-color: var(--input);
-		background: var(--background);
+		border-color: var(--border);
+		background: var(--secondary);
+		color: var(--secondary-foreground);
 	}
 
 	.button--outline:hover:not(:disabled) {
