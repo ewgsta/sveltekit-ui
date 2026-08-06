@@ -40,6 +40,7 @@
 		border-radius: var(--radius-md);
 		font-size: 0.875rem;
 		font-weight: 500;
+		color: var(--foreground);
 		border: 1px solid transparent;
 		cursor: pointer;
 		transition: all 0.15s ease;
@@ -78,7 +79,7 @@
 	}
 
 	.button--outline {
-		border-color: var(--border);
+		border-color: var(--input);
 		background: var(--background);
 	}
 
@@ -99,6 +100,7 @@
 	.button--ghost {
 		background: transparent;
 		box-shadow: none;
+		color: var(--foreground);
 	}
 
 	.button--ghost:hover:not(:disabled) {
