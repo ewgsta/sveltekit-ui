@@ -5,7 +5,12 @@
 
 <div class="sonner-viewport" role="region" aria-live="polite" aria-label="Bildirimler">
 	{#each toasts as item (item.id)}
-		<div class="sonner-toast" class:sonner-toast--error={item.type === 'error'} role="status">
+		<div
+			class="sonner-toast"
+			class:sonner-toast--error={item.type === 'error'}
+			class:sonner-toast--leaving={item.leaving}
+			role="status"
+		>
 			<div class="sonner-toast-body">
 				<p class="sonner-toast-title">{item.title}</p>
 				{#if item.description}
@@ -39,11 +44,11 @@
 <style>
 	.sonner-viewport {
 		position: fixed;
-		top: 1rem;
+		bottom: 1rem;
 		right: 1rem;
 		z-index: var(--z-tooltip);
 		display: flex;
-		flex-direction: column;
+		flex-direction: column-reverse;
 		gap: 0.5rem;
 		pointer-events: none;
 	}
@@ -62,7 +67,7 @@
 			0 10px 15px -3px rgb(0 0 0 / 0.1),
 			0 4px 6px -4px rgb(0 0 0 / 0.1);
 		pointer-events: auto;
-		animation: sonner-in 0.2s ease both;
+		animation: sonner-in 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) both;
 	}
 
 	.sonner-toast--error {
@@ -136,14 +141,29 @@
 		opacity: 1;
 	}
 
+	.sonner-toast--leaving {
+		animation: sonner-out 0.3s cubic-bezier(0.21, 1.02, 0.73, 1) forwards;
+	}
+
 	@keyframes sonner-in {
 		from {
 			opacity: 0;
-			transform: translateX(1rem) scale(0.97);
+			transform: translateY(0.75rem) scale(0.96);
 		}
 		to {
 			opacity: 1;
-			transform: translateX(0) scale(1);
+			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes sonner-out {
+		from {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(0.5rem) scale(0.96);
 		}
 	}
 </style>
