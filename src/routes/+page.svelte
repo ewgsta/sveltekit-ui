@@ -20,11 +20,12 @@
 		Radio,
 		Select,
 		Slider,
+		Sonner,
 		Switch,
 		Tabs,
 		Textarea,
-		Toggle,
-		Tooltip
+		Tooltip,
+		toast
 	} from '$lib/ui';
 
 	let open = $state(false);
@@ -113,12 +114,26 @@
 		<h2>Geri bildirim</h2>
 		<div class="grid">
 			<Progress value={progress} max={100} />
-			<Toggle pressed={agree} onclick={() => (agree = !agree)}>Kalın</Toggle>
 			<Tooltip text="Bu bir ipucu"><Button>Üzerime gel</Button></Tooltip>
 			<Alert title="Dikkat">Bu bir uyarı kutusudur.</Alert>
 			<Badge>Etiket</Badge>
 			<Badge variant="secondary">İkincil</Badge>
 			<Avatar><AvatarFallback>AK</AvatarFallback></Avatar>
+			<div class="row">
+				<Button onclick={() => toast.default({ title: 'Kaydedildi' })}>Bilgi</Button>
+				<Button
+					variant="outline"
+					onclick={() => toast.success({ title: 'Başarılı', description: 'İşlem tamamlandı.' })}
+				>
+					Başarı
+				</Button>
+				<Button
+					variant="destructive"
+					onclick={() => toast.error({ title: 'Hata', description: 'Bir şeyler ters gitti.' })}
+				>
+					Hata
+				</Button>
+			</div>
 		</div>
 	</section>
 
@@ -151,6 +166,8 @@
 <Dialog {open} title="Örnek İletişim" onclose={() => (open = false)}>
 	<p>İçerik buraya gelir.</p>
 </Dialog>
+
+<Sonner />
 
 <style>
 	.page {

@@ -1,0 +1,33 @@
+export type Toast = {
+	id: number;
+	title: string;
+	description?: string;
+	type?: 'default' | 'success' | 'error';
+	action?: { label: string; onClick: () => void };
+	duration?: number;
+};
+
+export type ToastInput = Omit<Toast, 'id'>;
+
+let toasts = $state<Toast[]>([]);
+let counter = 0;
+
+export function dismiss(id: number) {
+	toasts = toasts.filter((t) => t.id !== id);
+}
+
+function spawn(input: ToastInput) {
+	counter += 1;
+	const toast: Toast = { ...input, id: counter };
+	toasts = [...toasts, toast];
+	setTimeout(() => dismiss(toast.id), input.duration ?? 4000);
+	return toast.id;
+}
+
+export const toast = {
+	default: (input: ToastInput) => spawn({ type: 'default', ...input }),
+	success: (input: ToastInput) => spawn({ type: 'success', ...input }),
+	error: (input: ToastInput) => spawn({ type: 'error', ...input })
+};
+
+export { toasts };
