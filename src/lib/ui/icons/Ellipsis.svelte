@@ -1,0 +1,30 @@
+<script lang="ts">
+	let {
+		size = 16,
+		class: className = '',
+		strokeWidth = 2
+	}: { size?: number; class?: string; strokeWidth?: number } = $props();
+</script>
+
+<svg
+	class={`icon ${className}`}
+	width={size}
+	height={size}
+	viewBox="0 0 24 24"
+	fill="none"
+	stroke="currentColor"
+	stroke-width={strokeWidth}
+	stroke-linecap="round"
+	stroke-linejoin="round"
+	aria-hidden="true"
+>
+	<circle cx="12" cy="12" r="1" />
+	<circle cx="19" cy="12" r="1" />
+	<circle cx="5" cy="12" r="1" />
+</svg>
+
+<style>
+	.icon {
+		flex-shrink: 0;
+	}
+</style>

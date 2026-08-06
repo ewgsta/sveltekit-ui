@@ -13,9 +13,17 @@
 		CardHeader,
 		CardTitle,
 		Checkbox,
+		Combobox,
+		DatePicker,
 		Dialog,
+		DropdownMenu,
+		DropdownMenuItem,
+		DropdownMenuLabel,
+		DropdownMenuSeparator,
+		Ellipsis,
 		Input,
 		Label,
+		Popover,
 		Progress,
 		Radio,
 		Select,
@@ -24,6 +32,7 @@
 		Switch,
 		Tabs,
 		Textarea,
+		ToggleGroup,
 		Tooltip,
 		toast
 	} from '$lib/ui';
@@ -38,10 +47,26 @@
 	let agree = $state(false);
 	let theme = $state('açık');
 	let choice = $state('a');
+	let combo = $state('');
+	let date = $state<Date | undefined>(undefined);
+	let toggled = $state('bir');
+	let toggles = $state([]);
 
 	const tabsArr = [
 		{ value: 'form', label: 'Form' },
 		{ value: 'ayarlar', label: 'Ayarlar' }
+	];
+
+	const comboItems = [
+		{ value: 'one', label: 'Naruto' },
+		{ value: 'two', label: 'One Piece' },
+		{ value: 'three', label: 'Bleach' }
+	];
+
+	const toggleItems = [
+		{ value: 'bir', label: 'Bir' },
+		{ value: 'iki', label: 'İki' },
+		{ value: 'üç', label: 'Üç' }
 	];
 </script>
 
@@ -177,6 +202,56 @@
 			]}
 		/>
 	</section>
+
+	<section>
+		<h2>İşlevsel Bileşenler</h2>
+
+		<div class="grid">
+			<div class="row">
+				<DropdownMenu>
+					{#snippet trigger()}
+						<Button variant="outline" size="icon-sm">
+							<Ellipsis size={16} />
+						</Button>
+					{/snippet}
+					<DropdownMenuLabel>Hesap</DropdownMenuLabel>
+					<DropdownMenuItem onSelect={() => toast.default({ title: 'Düzenle seçildi' })}>
+						Düzenle
+					</DropdownMenuItem>
+					<DropdownMenuItem>Paylaş</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem variant="destructive">Sil</DropdownMenuItem>
+				</DropdownMenu>
+
+				<Popover side="bottom" align="start">
+					{#snippet trigger()}
+						<Button variant="outline">Popover</Button>
+					{/snippet}
+					<p class="popover-note">
+						Bu bir popover içeriğidir. Dışarı tıklayınca veya Esc ile kapanır.
+					</p>
+				</Popover>
+			</div>
+
+			<label>
+				<Label>Filtre (arama)</Label>
+				<Combobox bind:value={combo} items={comboItems} />
+			</label>
+
+			<label>
+				<Label>Tarih</Label>
+				<DatePicker bind:value={date} />
+			</label>
+
+			<div class="row">
+				<ToggleGroup items={toggleItems} bind:value={toggled} />
+			</div>
+
+			<div class="row">
+				<ToggleGroup type="multiple" items={toggleItems} bind:values={toggles} />
+			</div>
+		</div>
+	</section>
 </div>
 
 <Dialog
@@ -288,5 +363,12 @@
 		justify-content: flex-end;
 		gap: 8px;
 		margin-top: 4px;
+	}
+
+	.popover-note {
+		max-width: 14rem;
+		font-size: 0.813rem;
+		color: var(--muted-foreground);
+		line-height: 1.5;
 	}
 </style>

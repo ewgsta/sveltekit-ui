@@ -2,3 +2,8 @@ export { default as Check } from './Check.svelte';
 export { default as Minus } from './Minus.svelte';
 export { default as X } from './X.svelte';
 export { default as Chevron } from './Chevron.svelte';
+export { default as ChevronLeft } from './ChevronLeft.svelte';
+export { default as ChevronRight } from './ChevronRight.svelte';
+export { default as Search } from './Search.svelte';
+export { default as Calendar } from './Calendar.svelte';
+export { default as Ellipsis } from './Ellipsis.svelte';
