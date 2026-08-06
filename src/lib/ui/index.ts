@@ -23,3 +23,5 @@ export { default as Select } from './components/Select.svelte';
 export { default as Tooltip } from './components/Tooltip.svelte';
 export { default as Dialog } from './components/Dialog.svelte';
 export { default as Alert } from './components/Alert.svelte';
+export { default as Tabs } from './components/Tabs.svelte';
+export { default as Accordion } from './components/Accordion.svelte';
