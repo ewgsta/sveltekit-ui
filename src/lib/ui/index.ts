@@ -19,3 +19,5 @@ export { default as CardContent } from './components/CardContent.svelte';
 export { default as CardFooter } from './components/CardFooter.svelte';
 export { default as Avatar } from './components/Avatar.svelte';
 export { default as AvatarFallback } from './components/AvatarFallback.svelte';
+export { default as Select } from './components/Select.svelte';
+export { default as Tooltip } from './components/Tooltip.svelte';
