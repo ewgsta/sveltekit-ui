@@ -6,3 +6,4 @@ export { default as Checkbox } from './components/Checkbox.svelte';
 export { default as Switch } from './components/Switch.svelte';
 
 export * from './icons';
+export { default as Radio } from './components/Radio.svelte';
