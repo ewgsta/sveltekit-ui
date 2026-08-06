@@ -7,3 +7,6 @@ export { default as Switch } from './components/Switch.svelte';
 
 export * from './icons';
 export { default as Radio } from './components/Radio.svelte';
+export { default as Slider } from './components/Slider.svelte';
+export { default as Progress } from './components/Progress.svelte';
+export { default as Toggle } from './components/Toggle.svelte';
