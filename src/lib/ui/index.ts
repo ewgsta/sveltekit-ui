@@ -36,3 +36,6 @@ export { default as Popover } from './components/Popover.svelte';
 export { default as Combobox } from './components/Combobox.svelte';
 export { default as DatePicker } from './components/DatePicker.svelte';
 export { default as ToggleGroup } from './components/ToggleGroup.svelte';
+export { default as Separator } from './components/Separator.svelte';
+export { default as Skeleton } from './components/Skeleton.svelte';
+export { default as Kbd } from './components/Kbd.svelte';

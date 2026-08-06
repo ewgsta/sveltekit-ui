@@ -22,12 +22,15 @@
 		DropdownMenuSeparator,
 		Ellipsis,
 		Input,
+		Kbd,
 		Label,
 		Popover,
 		Progress,
 		Radio,
 		Select,
+		Separator,
 		Slider,
+		Skeleton,
 		Sonner,
 		Switch,
 		Tabs,
@@ -252,6 +255,26 @@
 			</div>
 		</div>
 	</section>
+
+	<section>
+		<h2>Yardımcı Bileşenler</h2>
+		<div class="grid">
+			<div class="row">
+				<Skeleton class="skeleton-lg" />
+				<Skeleton class="skeleton-avatar" />
+			</div>
+			<div class="row">
+				<Separator orientation="vertical" class="sep-demo" />
+				<span>Ayraçlar</span>
+				<Separator orientation="vertical" class="sep-demo" />
+			</div>
+			<div class="row">
+				<Kbd>Ctrl</Kbd>
+				<Kbd>K</Kbd>
+				<Kbd>⌘</Kbd>
+			</div>
+		</div>
+	</section>
 </div>
 
 <Dialog
@@ -370,5 +393,20 @@
 		font-size: 0.813rem;
 		color: var(--muted-foreground);
 		line-height: 1.5;
+	}
+
+	:global(.skeleton-lg) {
+		width: 12rem;
+		height: 12px;
+	}
+
+	:global(.skeleton-avatar) {
+		width: 32px;
+		height: 32px;
+		border-radius: 50%;
+	}
+
+	:global(.sep-demo) {
+		height: 1.25rem;
 	}
 </style>
