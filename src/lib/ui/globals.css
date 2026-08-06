@@ -1,27 +1,125 @@
+@import '@fontsource-variable/inter';
+
 :root {
-	--color-bg: #fff;
-	--color-text: #1a1a1a;
-	--color-primary: #2563eb;
-	--color-muted: #6b7280;
-	--color-border: #e5e7eb;
-	--radius-sm: 0.25rem;
-	--radius-md: 0.5rem;
+	/* backgrounds & text */
+	--background: #ffffff;
+	--foreground: var(--primary);
+
+	--sidebar: var(--border);
+	--sidebar-foreground: var(--primary);
+
+	--muted: var(--secondary);
+	--muted-foreground: #8f8ca2;
+
+	--popover: var(--tertiary);
+	--popover-foreground: var(--primary);
+
+	--border: #eeeff0;
+	--input: var(--muted-foreground);
+
+	--card: var(--secondary);
+	--card-foreground: var(--primary);
+
+	--primary: #07041d;
+	--primary-foreground: var(--secondary);
+
+	--secondary: #f1f0f5;
+	--secondary-foreground: var(--primary);
+
+	--accent: var(--secondary);
+	--accent-foreground: var(--primary);
+
+	--tertiary: #ffffff;
+	--tertiary-foreground: var(--muted-foreground);
+
+	--red: #fc5a5a;
+	--red-foreground: var(--secondary);
+
+	--blue: #1e75ff;
+	--blue-foreground: var(--primary-foreground);
+
+	--destructive: var(--red);
+	--destructive-foreground: var(--red-foreground);
+
+	--ring: var(--border);
+
+	--radius: 0.5rem;
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-lg: var(--radius);
+
+	color-scheme: light dark;
+
+	/* spacing scale */
 	--space-1: 0.25rem;
 	--space-2: 0.5rem;
 	--space-3: 0.75rem;
 	--space-4: 1rem;
 	--space-6: 1.5rem;
 	--space-8: 2rem;
-	--font-sans:
-		system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-		'Segoe UI Emoji';
 
-	@media (prefers-color-scheme: dark) {
-		--color-bg: #0f172a;
-		--color-text: #f1f5f9;
-		--color-primary: #60a5fa;
-		--color-muted: #94a3b8;
-		--color-border: #1e293b;
+	/* font */
+	--font-sans:
+		Inter, 'Inter Variable', 'Inter Fallback', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+		Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+		'Noto Color Emoji';
+
+	/* shadows */
+	--shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+	--shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+
+	/* z-index */
+	--z-dropdown: 1000;
+	--z-sticky: 1020;
+	--z-fixed: 1030;
+	--z-modal-backdrop: 1040;
+	--z-modal: 1050;
+	--z-popover: 1060;
+	--z-tooltip: 1070;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: #1c1c24;
+		--foreground: var(--primary);
+
+		--sidebar: #17171e;
+		--sidebar-foreground: #efeff0;
+
+		--primary: #efeff0;
+
+		--muted: var(--tertiary);
+		--muted-foreground: #898993;
+
+		--accent: var(--border);
+		--accent-foreground: #f1f0f5;
+
+		--popover: var(--tertiary);
+		--popover-foreground: var(--primary);
+
+		--border: #2c2c34;
+		--input: #4e4e56;
+
+		--card: var(--secondary);
+		--card-foreground: var(--primary);
+
+		--primary-foreground: var(--secondary);
+
+		--secondary: #292932;
+		--secondary-foreground: var(--primary);
+
+		--tertiary: #17171e;
+		--tertiary-foreground: var(--muted-foreground);
+
+		--red: #fc5a5a;
+		--red-foreground: var(--primary);
+
+		--blue: #1e75ff;
+		--blue-foreground: var(--secondary-foreground);
+
+		--destructive: var(--red);
+		--destructive-foreground: var(--red-foreground);
+
+		--ring: var(--input);
 	}
 }
 
@@ -29,6 +127,11 @@
 *::before,
 *::after {
 	box-sizing: border-box;
+	border-color: var(--border);
+}
+
+html {
+	scroll-behavior: smooth;
 }
 
 html,
@@ -38,11 +141,13 @@ body {
 }
 
 body {
-	background: var(--color-bg);
-	color: var(--color-text);
+	background: var(--background);
+	color: var(--foreground);
 	font-family: var(--font-sans);
+	font-style: normal;
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
 }
 
 h1,
@@ -52,7 +157,6 @@ h4,
 h5,
 h6 {
 	margin: 0;
-	font-weight: 600;
 	line-height: 1.2;
 }
 
@@ -61,5 +165,26 @@ p {
 }
 
 a {
-	color: var(--color-primary);
+	color: var(--primary);
+	text-decoration: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+
+::selection {
+	background: var(--primary);
+	color: var(--primary-foreground);
+}
+
+[data-slot='button'],
+[data-slot='input']:disabled,
+[data-slot='checkbox']:disabled,
+[data-slot='switch']:disabled {
+	cursor: not-allowed;
 }
