@@ -15,12 +15,32 @@
 	} = $props();
 
 	let open = $state(false);
+	let visible = $state(false);
+	let closing = $state(false);
 	let rootEl: HTMLDivElement;
 
 	const ctx = {
 		close: () => (open = false)
 	};
 	setContext('dropdown-menu', ctx);
+
+	$effect(() => {
+		if (open && !visible) {
+			visible = true;
+			closing = false;
+			return;
+		}
+		if (!open && visible) {
+			closing = true;
+			const t = setTimeout(() => {
+				visible = false;
+				closing = false;
+			}, 160);
+			return () => {
+				clearTimeout(t);
+			};
+		}
+	});
 
 	$effect(() => {
 		if (!open) return;
@@ -58,8 +78,13 @@
 	>
 		{@render trigger()}
 	</div>
-	{#if open}
-		<div class={`dropdown-menu dropdown-menu--${align}`} role="menu" tabindex="-1">
+	{#if visible}
+		<div
+			class={`dropdown-menu dropdown-menu--${align}`}
+			class:dropdown-menu--closing={closing}
+			role="menu"
+			tabindex="-1"
+		>
 			{@render children?.()}
 		</div>
 	{/if}
@@ -101,6 +126,10 @@
 		right: 0;
 	}
 
+	.dropdown-menu--closing {
+		animation: dropdown-out 0.16s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+	}
+
 	@keyframes dropdown-in {
 		from {
 			opacity: 0;
@@ -109,6 +138,17 @@
 		to {
 			opacity: 1;
 			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes dropdown-out {
+		from {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-3px) scale(0.98);
 		}
 	}
 </style>

@@ -16,6 +16,8 @@
 	} = $props();
 
 	let open = $state(false);
+	let visible = $state(false);
+	let closing = $state(false);
 	let rootEl: HTMLDivElement;
 	let view = $state(new Date());
 
@@ -35,6 +37,24 @@
 			const d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
 			return d;
 		});
+	});
+
+	$effect(() => {
+		if (open && !visible) {
+			visible = true;
+			closing = false;
+			return;
+		}
+		if (!open && visible) {
+			closing = true;
+			const t = setTimeout(() => {
+				visible = false;
+				closing = false;
+			}, 160);
+			return () => {
+				clearTimeout(t);
+			};
+		}
 	});
 
 	$effect(() => {
@@ -122,8 +142,13 @@
 		{/if}
 	</button>
 
-	{#if open}
-		<div class="datepicker-panel" role="dialog" aria-label="Tarih seçici">
+	{#if visible}
+		<div
+			class="datepicker-panel"
+			class:datepicker-panel--closing={closing}
+			role="dialog"
+			aria-label="Tarih seçici"
+		>
 			<div class="datepicker-nav">
 				<button
 					class="datepicker-nav-btn"
@@ -350,6 +375,10 @@
 		opacity: 0.9;
 	}
 
+	.datepicker-panel--closing {
+		animation: datepicker-out 0.16s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+	}
+
 	@keyframes datepicker-in {
 		from {
 			opacity: 0;
@@ -358,6 +387,17 @@
 		to {
 			opacity: 1;
 			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes datepicker-out {
+		from {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-3px) scale(0.98);
 		}
 	}
 </style>

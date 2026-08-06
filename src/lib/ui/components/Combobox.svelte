@@ -22,6 +22,8 @@
 	} = $props();
 
 	let open = $state(false);
+	let visible = $state(false);
+	let closing = $state(false);
 	let query = $state('');
 	let rootEl: HTMLDivElement;
 	let inputEl = $state<HTMLInputElement | undefined>();
@@ -34,19 +36,32 @@
 	);
 
 	$effect(() => {
+		if (open && !visible) {
+			visible = true;
+			closing = false;
+			return;
+		}
+		if (!open && visible) {
+			closing = true;
+			const t = setTimeout(() => {
+				visible = false;
+				closing = false;
+				query = '';
+			}, 160);
+			return () => {
+				clearTimeout(t);
+			};
+		}
+	});
+
+	$effect(() => {
 		if (!open) return;
 		inputEl?.focus();
 		const onClick = (e: MouseEvent) => {
-			if (rootEl && !rootEl.contains(e.target as Node)) {
-				open = false;
-				query = '';
-			}
+			if (rootEl && !rootEl.contains(e.target as Node)) open = false;
 		};
 		const onKey = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') {
-				open = false;
-				query = '';
-			}
+			if (e.key === 'Escape') open = false;
 		};
 		document.addEventListener('pointerdown', onClick);
 		document.addEventListener('keydown', onKey);
@@ -59,7 +74,6 @@
 	function select(item: ComboboxItem) {
 		value = item.value;
 		open = false;
-		query = '';
 	}
 </script>
 
@@ -81,8 +95,8 @@
 		/>
 	</button>
 
-	{#if open}
-		<div class="combobox-panel">
+	{#if visible}
+		<div class="combobox-panel" class:combobox-panel--closing={closing}>
 			<div class="combobox-search">
 				<Search size={14} />
 				<input
@@ -269,6 +283,10 @@
 		color: var(--muted-foreground);
 	}
 
+	.combobox-panel--closing {
+		animation: combobox-out 0.16s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+	}
+
 	@keyframes combobox-in {
 		from {
 			opacity: 0;
@@ -277,6 +295,17 @@
 		to {
 			opacity: 1;
 			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes combobox-out {
+		from {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-3px) scale(0.98);
 		}
 	}
 </style>

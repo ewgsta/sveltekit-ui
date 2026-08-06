@@ -18,9 +18,29 @@
 	} = $props();
 
 	let open = $state(false);
+	let visible = $state(false);
+	let closing = $state(false);
 	let rootEl: HTMLDivElement;
 
 	const selected = $derived(items.find((i) => i.value === value));
+
+	$effect(() => {
+		if (open && !visible) {
+			visible = true;
+			closing = false;
+			return;
+		}
+		if (!open && visible) {
+			closing = true;
+			const t = setTimeout(() => {
+				visible = false;
+				closing = false;
+			}, 160);
+			return () => {
+				clearTimeout(t);
+			};
+		}
+	});
 
 	$effect(() => {
 		if (!open) return;
@@ -59,8 +79,8 @@
 		<Chevron size={16} class={open ? 'select-chevron select-chevron--open' : 'select-chevron'} />
 	</button>
 
-	{#if open}
-		<div class="select-menu" role="listbox">
+	{#if visible}
+		<div class="select-menu" class:select-menu--closing={closing} role="listbox">
 			{#each items as item (item.value)}
 				<button
 					class="select-item"
@@ -199,6 +219,10 @@
 		opacity: 0;
 	}
 
+	.select-menu--closing {
+		animation: select-out 0.16s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+	}
+
 	@keyframes select-in {
 		from {
 			opacity: 0;
@@ -207,6 +231,17 @@
 		to {
 			opacity: 1;
 			transform: translateY(0) scale(1);
+		}
+	}
+
+	@keyframes select-out {
+		from {
+			opacity: 1;
+			transform: translateY(0) scale(1);
+		}
+		to {
+			opacity: 0;
+			transform: translateY(-3px) scale(0.98);
 		}
 	}
 </style>
