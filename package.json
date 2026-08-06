@@ -10,18 +10,40 @@
 		"deploy": "npm run build && wrangler deploy",
 		"dev:remote": "npm run build && wrangler dev",
 		"cf:typegen": "wrangler types",
-		"prepare": "svelte-kit sync || echo ''",
+		"prepare": "svelte-kit sync && husky || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"lint:fix": "prettier --write . && eslint . --fix",
+		"format": "prettier --write ."
+	},
+	"lint-staged": {
+		"*.{js,ts,svelte,json,md,css,html}": [
+			"bunx prettier --write",
+			"bunx eslint --fix"
+		]
 	},
 	"devDependencies": {
 		"@cloudflare/workers-types": "^5.20260804.1",
+		"@commitlint/cli": "^21.2.1",
+		"@commitlint/config-conventional": "^21.2.0",
+		"@eslint/js": "^10.0.1",
 		"@sveltejs/adapter-cloudflare": "^7.2.9",
 		"@sveltejs/kit": "^2.63.0",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
+		"@types/node": "^24",
+		"eslint": "^10.4.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-svelte": "^3.19.0",
+		"globals": "^17.6.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.3.0",
+		"prettier": "^3.8.3",
+		"prettier-plugin-svelte": "^4.1.0",
 		"svelte": "^5.56.1",
 		"svelte-check": "^4.6.0",
 		"typescript": "^6.0.3",
+		"typescript-eslint": "^8.60.1",
 		"vite": "^8.0.16",
 		"wrangler": "^4.119.0"
 	}
