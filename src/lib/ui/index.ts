@@ -25,3 +25,4 @@ export { default as Dialog } from './components/Dialog.svelte';
 export { default as Alert } from './components/Alert.svelte';
 export { default as Tabs } from './components/Tabs.svelte';
 export { default as Accordion } from './components/Accordion.svelte';
+export { default as Table } from './components/Table.svelte';
