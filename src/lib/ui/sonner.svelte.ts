@@ -23,6 +23,11 @@ export function dismiss(id: number) {
 	}, 300);
 }
 
+export function remove(id: number) {
+	const index = toasts.findIndex((t) => t.id === id);
+	if (index !== -1) toasts.splice(index, 1);
+}
+
 function markLeaving(id: number) {
 	const index = toasts.findIndex((t) => t.id === id);
 	if (index !== -1) {

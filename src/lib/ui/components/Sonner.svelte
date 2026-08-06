@@ -1,6 +1,45 @@
 <script lang="ts">
 	import { X } from '$lib/ui/icons';
-	import { dismiss, toasts } from '$lib/ui/sonner.svelte';
+	import { dismiss, remove, toasts } from '$lib/ui/sonner.svelte';
+
+	let toastEls = $state<Record<number, HTMLDivElement>>({});
+
+	function onPointerDown(event: PointerEvent, id: number) {
+		if ((event.target as HTMLElement).closest('[data-no-drag]')) return;
+		const el = toastEls[id];
+		if (!el || el.dataset.dragging === 'true') return;
+		el.setPointerCapture(event.pointerId);
+		const startX = event.clientX;
+		let dx = 0;
+
+		const move = (e: PointerEvent) => {
+			dx = e.clientX - startX;
+			el.dataset.dragging = 'true';
+			el.style.transition = 'none';
+			el.style.transform = `translateX(${dx}px)`;
+			el.style.opacity = String(Math.max(0.15, 1 - Math.abs(dx) / 220));
+		};
+
+		const up = () => {
+			el.removeEventListener('pointermove', move);
+			el.removeEventListener('pointerup', up);
+			delete el.dataset.dragging;
+			if (Math.abs(dx) > 80) {
+				const dir = dx > 0 ? 100 : -100;
+				el.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+				el.style.transform = `translateX(${dir}%)`;
+				el.style.opacity = '0';
+				setTimeout(() => remove(id), 160);
+			} else {
+				el.style.transition = 'transform 0.2s ease, opacity 0.2s ease';
+				el.style.transform = '';
+				el.style.opacity = '';
+			}
+		};
+
+		el.addEventListener('pointermove', move);
+		el.addEventListener('pointerup', up);
+	}
 </script>
 
 <div class="sonner-viewport" role="region" aria-live="polite" aria-label="Bildirimler">
@@ -10,6 +49,9 @@
 			class:sonner-toast--error={item.type === 'error'}
 			class:sonner-toast--leaving={item.leaving}
 			role="status"
+			style="touch-action: pan-y"
+			bind:this={toastEls[item.id]}
+			onpointerdown={(e) => onPointerDown(e, item.id)}
 		>
 			<div class="sonner-toast-body">
 				<p class="sonner-toast-title">{item.title}</p>
@@ -20,6 +62,7 @@
 			{#if item.action}
 				<button
 					class="sonner-action"
+					data-no-drag
 					type="button"
 					onclick={() => {
 						item.action?.onClick();
@@ -31,8 +74,10 @@
 			{/if}
 			<button
 				class="sonner-close"
+				data-no-drag
 				type="button"
 				aria-label="Kapat"
+				title="Kapat"
 				onclick={() => dismiss(item.id)}
 			>
 				<X size={14} />
@@ -58,7 +103,7 @@
 		align-items: flex-start;
 		gap: 0.75rem;
 		width: min(22rem, 100vw - 2rem);
-		padding: 0.75rem 0.875rem;
+		padding: 0.75rem 0.875rem 0.75rem 1rem;
 		border-radius: var(--radius-lg);
 		border: 1px solid var(--border);
 		background: var(--sidebar);
@@ -67,6 +112,7 @@
 			0 10px 15px -3px rgb(0 0 0 / 0.1),
 			0 4px 6px -4px rgb(0 0 0 / 0.1);
 		pointer-events: auto;
+		will-change: transform, opacity;
 		animation: sonner-in 0.35s cubic-bezier(0.21, 1.02, 0.73, 1) both;
 	}
 
@@ -82,14 +128,7 @@
 		gap: 0.25rem;
 		flex: 1;
 		min-width: 0;
-	}
-
-	.sonner-toast-body {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-		flex: 1;
-		min-width: 0;
+		padding-top: 0.125rem;
 	}
 
 	.sonner-toast-title {
@@ -126,19 +165,27 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 1.25rem;
-		height: 1.25rem;
+		width: 1.5rem;
+		height: 1.5rem;
 		border: 0;
 		border-radius: var(--radius-sm);
 		background: transparent;
 		color: var(--muted-foreground);
 		cursor: pointer;
-		opacity: 0.7;
-		transition: opacity 0.15s ease;
+		transition:
+			background-color 0.15s ease,
+			color 0.15s ease,
+			opacity 0.15s ease;
 	}
 
 	.sonner-close:hover {
-		opacity: 1;
+		background: color-mix(in srgb, var(--foreground) 10%, transparent);
+		color: var(--foreground);
+	}
+
+	.sonner-close:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 2px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	.sonner-toast--leaving {
