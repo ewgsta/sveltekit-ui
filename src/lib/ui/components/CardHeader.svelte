@@ -19,7 +19,7 @@
 	.card-header {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-1);
-		padding: var(--space-4);
+		gap: 6px;
+		padding: 16px;
 	}
 </style>

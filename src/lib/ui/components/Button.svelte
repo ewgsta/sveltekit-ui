@@ -21,6 +21,7 @@
 </script>
 
 <button
+	data-slot="button"
 	class={`button button--${variant} button--${size} ${className}`}
 	{type}
 	{disabled}
@@ -34,21 +35,17 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-2);
+		gap: 8px;
 		white-space: nowrap;
 		border-radius: var(--radius-md);
 		font-size: 0.875rem;
 		font-weight: 500;
-		line-height: 1;
 		border: 1px solid transparent;
 		cursor: pointer;
-		transition:
-			background-color 0.15s ease,
-			border-color 0.15s ease,
-			box-shadow 0.15s ease,
-			opacity 0.15s ease;
+		transition: all 0.15s ease;
 		outline: none;
 		flex-shrink: 0;
+		box-shadow: var(--shadow-xs);
 	}
 
 	.button:disabled {
@@ -58,14 +55,13 @@
 
 	.button:focus-visible {
 		border-color: var(--ring);
-		box-shadow: 0 0 0 3px rgb(0 0 0 / 0.08);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	/* variants */
 	.button--default {
 		background: var(--primary);
 		color: var(--primary-foreground);
-		box-shadow: var(--shadow-xs);
 	}
 
 	.button--default:hover:not(:disabled) {
@@ -75,7 +71,6 @@
 	.button--destructive {
 		background: var(--destructive);
 		color: #fff;
-		box-shadow: var(--shadow-xs);
 	}
 
 	.button--destructive:hover:not(:disabled) {
@@ -83,10 +78,8 @@
 	}
 
 	.button--outline {
-		border: 1px solid var(--border);
+		border-color: var(--border);
 		background: var(--background);
-		color: var(--foreground);
-		box-shadow: var(--shadow-xs);
 	}
 
 	.button--outline:hover:not(:disabled) {
@@ -97,7 +90,6 @@
 	.button--secondary {
 		background: var(--secondary);
 		color: var(--secondary-foreground);
-		box-shadow: var(--shadow-xs);
 	}
 
 	.button--secondary:hover:not(:disabled) {
@@ -106,7 +98,7 @@
 
 	.button--ghost {
 		background: transparent;
-		color: var(--foreground);
+		box-shadow: none;
 	}
 
 	.button--ghost:hover:not(:disabled) {
@@ -118,6 +110,7 @@
 		background: transparent;
 		color: var(--primary);
 		text-underline-offset: 4px;
+		box-shadow: none;
 	}
 
 	.button--link:hover:not(:disabled) {
@@ -126,37 +119,43 @@
 
 	/* sizes */
 	.button--default {
-		height: 2.25rem;
-		padding: 0 var(--space-4);
+		height: 36px;
+		padding: 0 16px;
 	}
 
 	.button--sm {
-		height: 2rem;
-		border-radius: var(--radius-sm);
-		padding: 0 var(--space-3);
-		font-size: 0.813rem;
+		height: 32px;
+		gap: 6px;
+		border-radius: var(--radius-md);
+		padding: 0 12px;
 	}
 
 	.button--lg {
-		height: 2.5rem;
+		height: 40px;
 		border-radius: var(--radius-md);
-		padding: 0 var(--space-6);
+		padding: 0 24px;
 	}
 
 	.button--icon {
-		height: 2.5rem;
-		width: 2.5rem;
+		height: 40px;
+		width: 40px;
 		padding: 0;
 	}
 
 	.button--icon-sm {
-		height: 2rem;
-		width: 2rem;
+		height: 32px;
+		width: 32px;
 		padding: 0;
 	}
 
 	.button--auto {
 		height: auto;
 		padding: 0;
+	}
+
+	.button :global(svg) {
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
 	}
 </style>

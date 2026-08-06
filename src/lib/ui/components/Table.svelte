@@ -48,6 +48,11 @@
 
 	.table :global(tbody tr) {
 		border-bottom: 1px solid var(--border);
+		transition: background-color 0.15s ease;
+	}
+
+	.table :global(tbody tr:hover) {
+		background: color-mix(in srgb, var(--muted) 10%, transparent);
 	}
 
 	.table :global(tbody tr:last-child) {

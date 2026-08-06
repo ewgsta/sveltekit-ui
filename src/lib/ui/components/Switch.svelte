@@ -2,13 +2,13 @@
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
 	let {
-		checked = false,
+		checked = $bindable(false),
 		class: className = '',
 		...rest
 	}: HTMLInputAttributes & { checked?: boolean } = $props();
 </script>
 
-<label class={`switch-wrap ${className}`}>
+<label class={`switch-wrap ${className}`} data-slot="switch">
 	<input type="checkbox" role="switch" class="switch-input" {checked} {...rest} />
 	<span class="switch-track">
 		<span class="switch-thumb"></span>
@@ -38,8 +38,8 @@
 	.switch-track {
 		display: inline-flex;
 		align-items: center;
-		width: 2rem;
-		height: 1.15rem;
+		width: 32px;
+		height: 18.4px;
 		flex-shrink: 0;
 		border-radius: 9999px;
 		border: 1px solid transparent;
@@ -50,8 +50,8 @@
 
 	.switch-thumb {
 		display: block;
-		width: 1rem;
-		height: 1rem;
+		width: 16px;
+		height: 16px;
 		border-radius: 9999px;
 		background: var(--background);
 		box-shadow: 0 1px 2px rgb(0 0 0 / 0.2);
@@ -68,7 +68,7 @@
 
 	.switch-input:focus-visible + .switch-track {
 		border-color: var(--ring);
-		box-shadow: 0 0 0 3px rgb(0 0 0 / 0.08);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	.switch-wrap:has(.switch-input:disabled) {

@@ -16,7 +16,7 @@
 
 <span class={`tooltip-wrap ${className}`} data-slot="tooltip-wrap">
 	<span class="tooltip-trigger">{@render children?.()}</span>
-	<span class={`tooltip tooltip--${side}`} role="tooltip">
+	<span class={`tooltip tooltip--${side}`} role="tooltip" data-slot="tooltip-content">
 		{text}
 		<span class="tooltip-arrow"></span>
 	</span>
@@ -33,9 +33,9 @@
 		z-index: var(--z-tooltip);
 		width: max-content;
 		max-width: 16rem;
-		padding: var(--space-1) var(--space-3);
-		border-radius: var(--radius-sm);
-		border: 1px solid var(--border);
+		padding: 6px 12px;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--background);
 		background: var(--sidebar);
 		color: var(--sidebar-foreground);
 		font-size: 0.75rem;
@@ -80,8 +80,9 @@
 		height: 0.5rem;
 		transform: rotate(45deg);
 		background: var(--sidebar);
-		border-right: 1px solid var(--border);
-		border-bottom: 1px solid var(--border);
+		border-right: 1px solid var(--background);
+		border-bottom: 1px solid var(--background);
+		border-radius: 2px;
 	}
 
 	.tooltip--top .tooltip-arrow {

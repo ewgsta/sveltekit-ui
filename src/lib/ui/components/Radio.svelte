@@ -41,7 +41,7 @@
 		height: 1rem;
 		flex-shrink: 0;
 		border-radius: 9999px;
-		border: 1px solid var(--border);
+		border: 1px solid var(--input);
 		background: transparent;
 		box-shadow: var(--shadow-xs);
 		transition:
@@ -68,7 +68,7 @@
 
 	.radio-input:focus-visible + .radio-dot {
 		border-color: var(--ring);
-		box-shadow: 0 0 0 3px rgb(0 0 0 / 0.08);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	.radio-wrap:has(.radio-input:disabled) {

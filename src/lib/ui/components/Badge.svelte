@@ -24,14 +24,14 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-1);
+		gap: 4px;
 		width: fit-content;
 		border-radius: 9999px;
 		border: 1px solid transparent;
-		padding: 0 var(--space-2);
+		padding: 0 8px;
 		font-size: 0.75rem;
 		font-weight: 600;
-		line-height: 1.375rem;
+		line-height: 22px;
 		white-space: nowrap;
 	}
 

@@ -17,10 +17,7 @@
 
 <style>
 	.card-content {
-		padding: 0 var(--space-4) var(--space-4);
-	}
-
-	.card-content:is(:only-child) {
-		padding-top: var(--space-4);
+		padding: 16px;
+		padding-top: 0;
 	}
 </style>

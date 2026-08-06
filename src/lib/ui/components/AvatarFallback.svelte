@@ -25,7 +25,5 @@
 		border-radius: 9999px;
 		background: var(--muted);
 		color: var(--muted-foreground);
-		font-size: 0.75rem;
-		font-weight: 500;
 	}
 </style>

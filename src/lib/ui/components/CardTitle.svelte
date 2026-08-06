@@ -6,20 +6,20 @@
 		class: className = '',
 		children,
 		...rest
-	}: HTMLAttributes<HTMLSpanElement> & {
+	}: HTMLAttributes<HTMLHeadingElement> & {
 		children?: Snippet;
 	} = $props();
 </script>
 
-<span class={`card-title ${className}`} data-slot="title" {...rest}>
+<h3 class={`card-title ${className}`} data-slot="card-title" {...rest}>
 	{@render children?.()}
-</span>
+</h3>
 
 <style>
 	.card-title {
-		font-size: 1.25rem;
 		font-weight: 600;
-		line-height: 1.2;
+		font-size: 1.25rem;
+		line-height: 1;
 		letter-spacing: -0.01em;
 	}
 </style>

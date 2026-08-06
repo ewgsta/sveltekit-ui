@@ -3,19 +3,25 @@
 	import type { Snippet } from 'svelte';
 	import type { HTMLSelectAttributes } from 'svelte/elements';
 
+	type Size = 'sm' | 'default';
+
 	let {
+		size = 'default',
+		value = $bindable(''),
 		class: className = '',
 		placeholder = '',
 		children,
 		...rest
-	}: HTMLSelectAttributes & {
+	}: Omit<HTMLSelectAttributes, 'size' | 'value'> & {
+		size?: Size;
+		value?: string;
 		placeholder?: string;
 		children?: Snippet;
 	} = $props();
 </script>
 
-<div class={`select ${className}`}>
-	<select class="select-input" {...rest}>
+<div class={`select select--${size} ${className}`}>
+	<select class="select-input" data-slot="select-trigger" bind:value {...rest}>
 		{#if placeholder}
 			<option value="" disabled selected hidden>{placeholder}</option>
 		{/if}
@@ -35,26 +41,31 @@
 	.select-input {
 		width: 100%;
 		min-width: 0;
-		height: 2.25rem;
-		padding: 0 var(--space-6) 0 var(--space-3);
+		height: 36px;
+		padding: 0 28px 0 12px;
 		border-radius: var(--radius-md);
-		border: 1px solid var(--border);
+		border: 1px solid var(--input);
 		background: var(--background);
 		color: var(--foreground);
 		font-size: 0.875rem;
-		line-height: 1;
+		white-space: nowrap;
 		box-shadow: var(--shadow-xs);
 		outline: none;
 		cursor: pointer;
 		appearance: none;
 		transition:
-			border-color 0.15s ease,
-			box-shadow 0.15s ease;
+			color 0.15s ease,
+			box-shadow 0.15s ease,
+			border-color 0.15s ease;
+	}
+
+	.select--sm .select-input {
+		height: 32px;
 	}
 
 	.select-input:focus-visible {
 		border-color: var(--ring);
-		box-shadow: 0 0 0 3px rgb(0 0 0 / 0.08);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	.select-input:disabled {
@@ -64,9 +75,10 @@
 
 	.select-chevron {
 		position: absolute;
-		right: var(--space-2);
+		right: 8px;
+		display: inline-flex;
 		pointer-events: none;
 		color: var(--muted-foreground);
-		display: inline-flex;
+		opacity: 0.5;
 	}
 </style>

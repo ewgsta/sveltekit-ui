@@ -3,18 +3,17 @@
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
 	let {
-		checked = false,
+		checked = $bindable(false),
 		indeterminate = false,
 		class: className = '',
 		...rest
 	}: HTMLInputAttributes & {
 		checked?: boolean;
 		indeterminate?: boolean;
-		value?: string;
 	} = $props();
 </script>
 
-<label class={`checkbox-wrap ${className}`}>
+<label class={`checkbox-wrap ${className}`} data-slot="checkbox">
 	<input type="checkbox" class="checkbox-input" {checked} bind:indeterminate {...rest} />
 	<span class="checkbox-box">
 		{#if indeterminate}
@@ -49,11 +48,11 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		width: 1rem;
-		height: 1rem;
+		width: 16px;
+		height: 16px;
 		flex-shrink: 0;
 		border-radius: 4px;
-		border: 1px solid var(--border);
+		border: 1px solid var(--input);
 		background: transparent;
 		box-shadow: var(--shadow-xs);
 		color: transparent;
@@ -72,7 +71,7 @@
 
 	.checkbox-input:focus-visible + .checkbox-box {
 		border-color: var(--ring);
-		box-shadow: 0 0 0 3px rgb(0 0 0 / 0.08);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	.checkbox-wrap:has(.checkbox-input:disabled) {

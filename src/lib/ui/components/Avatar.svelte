@@ -18,9 +18,9 @@
 <style>
 	.avatar {
 		position: relative;
-		display: inline-flex;
-		width: 2rem;
-		height: 2rem;
+		display: flex;
+		width: 32px;
+		height: 32px;
 		flex-shrink: 0;
 		overflow: hidden;
 		border-radius: 9999px;
@@ -29,6 +29,7 @@
 	.avatar :global(img) {
 		width: 100%;
 		height: 100%;
+		aspect-ratio: 1;
 		object-fit: cover;
 	}
 </style>

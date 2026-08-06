@@ -21,6 +21,7 @@
 </script>
 
 <button
+	data-slot="toggle"
 	class={`toggle toggle--${variant} toggle--${size} ${className}`}
 	class:toggle--pressed={pressed}
 	aria-pressed={pressed}
@@ -34,20 +35,16 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-2);
+		gap: 8px;
 		white-space: nowrap;
 		border-radius: var(--radius-md);
-		border: 0;
-		background: transparent;
 		font-size: 0.875rem;
 		font-weight: 500;
 		cursor: pointer;
 		outline: none;
 		transition:
-			background-color 0.15s ease,
-			border-color 0.15s ease,
-			box-shadow 0.15s ease,
-			opacity 0.15s ease;
+			color 0.15s ease,
+			box-shadow 0.15s ease;
 	}
 
 	.toggle:hover:not(:disabled) {
@@ -62,7 +59,7 @@
 
 	.toggle:focus-visible {
 		border: 1px solid var(--ring);
-		box-shadow: 0 0 0 3px rgb(0 0 0 / 0.08);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	.toggle--pressed {
@@ -71,7 +68,7 @@
 	}
 
 	.toggle--outline {
-		border: 1px solid var(--border);
+		border: 1px solid var(--input);
 		background: transparent;
 		box-shadow: var(--shadow-xs);
 	}
@@ -88,34 +85,44 @@
 
 	/* sizes */
 	.toggle--default {
-		height: 2.25rem;
-		padding: 0 var(--space-2);
+		height: 36px;
+		padding: 0 8px;
+		min-width: 36px;
 	}
 
 	.toggle--sm {
-		height: 2rem;
-		padding: 0 0.375rem;
+		height: 32px;
+		gap: 6px;
+		padding: 0 6px;
+		min-width: 32px;
 	}
 
 	.toggle--lg {
-		height: 2.5rem;
-		padding: 0 0.625rem;
+		height: 40px;
+		padding: 0 10px;
+		min-width: 40px;
 	}
 
 	.toggle--icon {
-		width: 2.25rem;
-		height: 2.25rem;
+		width: 36px;
+		height: 36px;
 		padding: 0;
 	}
 
 	.toggle--icon-sm {
-		width: 2rem;
-		height: 2rem;
+		width: 32px;
+		height: 32px;
 		padding: 0;
 	}
 
 	.toggle--auto {
 		height: auto;
 		padding: 0;
+	}
+
+	.toggle :global(svg) {
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
 	}
 </style>

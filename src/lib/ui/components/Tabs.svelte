@@ -44,10 +44,10 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--space-1);
+		gap: 4px;
 		width: fit-content;
-		height: 2rem;
-		padding: 0.188rem;
+		height: 32px;
+		padding: 3px;
 		border-radius: var(--radius-lg);
 		background: var(--muted);
 		color: var(--muted-foreground);
@@ -57,13 +57,15 @@
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
+		gap: 6px;
 		white-space: nowrap;
-		height: 1.5rem;
-		padding: 0 var(--space-3);
-		border: 0;
-		border-radius: var(--radius-sm);
+		height: calc(100% - 1px);
+		flex: 1;
+		padding: 2px 6px;
+		border: 1px solid transparent;
+		border-radius: var(--radius-md);
 		background: transparent;
-		color: inherit;
+		color: color-mix(in srgb, var(--foreground) 60%, transparent);
 		font-size: 0.875rem;
 		font-weight: 500;
 		cursor: pointer;
@@ -80,6 +82,6 @@
 	.tabs-trigger--active {
 		background: var(--background);
 		color: var(--foreground);
-		box-shadow: var(--shadow-xs);
+		box-shadow: var(--shadow-sm);
 	}
 </style>

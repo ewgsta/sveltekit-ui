@@ -1,35 +1,30 @@
 <script lang="ts">
 	import type { HTMLInputAttributes } from 'svelte/elements';
 
-	type Size = 'sm' | 'default';
-
-	let {
-		size = 'default',
-		class: className = '',
-		...rest
-	}: Omit<HTMLInputAttributes, 'size'> & { size?: Size } = $props();
+	let { class: className = '', ...rest }: HTMLInputAttributes = $props();
 </script>
 
-<input class={`input input--${size} ${className}`} {...rest} />
+<input data-slot="input" class={`input ${className}`} {...rest} />
 
 <style>
 	.input {
 		display: flex;
 		width: 100%;
 		min-width: 0;
-		height: 2.25rem;
+		height: 36px;
 		flex-shrink: 0;
 		border-radius: var(--radius-md);
-		border: 1px solid var(--border);
+		border: 1px solid var(--input);
 		background: transparent;
-		padding: 0.25rem var(--space-3);
-		font-size: 0.875rem;
+		padding: 4px 12px;
+		font-size: 1rem;
 		line-height: 1;
 		box-shadow: var(--shadow-xs);
 		outline: none;
 		transition:
-			border-color 0.15s ease,
-			box-shadow 0.15s ease;
+			color 0.15s ease,
+			box-shadow 0.15s ease,
+			border-color 0.15s ease;
 	}
 
 	.input::placeholder {
@@ -38,7 +33,7 @@
 
 	.input:focus-visible {
 		border-color: var(--ring);
-		box-shadow: 0 0 0 3px rgb(0 0 0 / 0.08);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	.input:disabled {
@@ -47,12 +42,9 @@
 		opacity: 0.5;
 	}
 
-	.input--default {
-		border-radius: var(--radius-md);
-	}
-
-	.input--sm {
-		height: 2rem;
-		border-radius: var(--radius-sm);
+	@media (min-width: 768px) {
+		.input {
+			font-size: 0.875rem;
+		}
 	}
 </style>

@@ -8,28 +8,28 @@
 	}: HTMLTextareaAttributes & { rows?: number } = $props();
 </script>
 
-<textarea class={`textarea ${className}`} {rows} {...rest}></textarea>
+<textarea data-slot="textarea" class={`textarea ${className}`} {rows} {...rest}></textarea>
 
 <style>
 	.textarea {
-		display: block;
+		display: flex;
 		width: 100%;
 		min-width: 0;
-		min-height: 4rem;
+		min-height: 64px;
 		flex-shrink: 0;
 		border-radius: var(--radius-md);
-		border: 1px solid var(--border);
+		border: 1px solid var(--input);
 		background: transparent;
-		padding: var(--space-2) var(--space-3);
-		font-size: 0.875rem;
+		padding: 8px 12px;
+		font-size: 1rem;
 		line-height: 1.5;
 		overflow: auto;
 		box-shadow: var(--shadow-xs);
 		outline: none;
 		transition:
-			border-color 0.15s ease,
+			color 0.15s ease,
 			box-shadow 0.15s ease,
-			height 0.15s ease;
+			border-color 0.15s ease;
 	}
 
 	.textarea::placeholder {
@@ -38,12 +38,17 @@
 
 	.textarea:focus-visible {
 		border-color: var(--ring);
-		box-shadow: 0 0 0 3px rgb(0 0 0 / 0.08);
+		box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
 	}
 
 	.textarea:disabled {
-		pointer-events: none;
 		cursor: not-allowed;
 		opacity: 0.5;
+	}
+
+	@media (min-width: 768px) {
+		.textarea {
+			font-size: 0.875rem;
+		}
 	}
 </style>

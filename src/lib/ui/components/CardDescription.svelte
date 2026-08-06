@@ -11,13 +11,13 @@
 	} = $props();
 </script>
 
-<p class={`card-description ${className}`} data-slot="description" {...rest}>
+<p class={`card-description ${className}`} data-slot="card-description" {...rest}>
 	{@render children?.()}
 </p>
 
 <style>
 	.card-description {
-		font-size: 0.875rem;
 		color: var(--muted-foreground);
+		font-size: 0.875rem;
 	}
 </style>
