@@ -86,10 +86,14 @@
 			</label>
 			<label>
 				<Label>Seçim</Label>
-				<Select bind:value={theme} placeholder="Seç…">
-					<option value="açık">Açık</option>
-					<option value="koyu">Koyu</option>
-				</Select>
+				<Select
+					bind:value={theme}
+					placeholder="Seç…"
+					items={[
+						{ value: 'açık', label: 'Açık' },
+						{ value: 'koyu', label: 'Koyu' }
+					]}
+				/>
 			</label>
 			<label>
 				<Label>Onayla</Label>
