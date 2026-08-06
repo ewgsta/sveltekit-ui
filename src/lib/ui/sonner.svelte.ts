@@ -9,17 +9,18 @@ export type Toast = {
 
 export type ToastInput = Omit<Toast, 'id'>;
 
-let toasts = $state<Toast[]>([]);
+const toasts = $state<Toast[]>([]);
 let counter = 0;
 
 export function dismiss(id: number) {
-	toasts = toasts.filter((t) => t.id !== id);
+	const index = toasts.findIndex((t) => t.id === id);
+	if (index !== -1) toasts.splice(index, 1);
 }
 
 function spawn(input: ToastInput) {
 	counter += 1;
 	const toast: Toast = { ...input, id: counter };
-	toasts = [...toasts, toast];
+	toasts.push(toast);
 	setTimeout(() => dismiss(toast.id), input.duration ?? 4000);
 	return toast.id;
 }
