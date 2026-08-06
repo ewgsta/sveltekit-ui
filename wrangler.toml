@@ -1,0 +1,25 @@
+name = "animesubtitles"
+main = ".svelte-kit/cloudflare/_worker.js"
+compatibility_date = "2026-08-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = ".svelte-kit/cloudflare"
+binding = "ASSETS"
+
+[vars]
+ENVIRONMENT = "production"
+
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "animesubtitles"
+# database_id = ""
+# migrations_dir = "migrations"
+
+# [[kv_namespaces]]
+# binding = "KV"
+# id = ""
+
+# [[r2_buckets]]
+# binding = "R2"
+# bucket_name = "animesubtitles"

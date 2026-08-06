@@ -1,0 +1,2 @@
+# Copy to `.dev.vars` and fill in values for local `wrangler dev` / `bun dev` via platform env.
+ENVIRONMENT=development

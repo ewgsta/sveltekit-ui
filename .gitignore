@@ -4,7 +4,6 @@ node_modules
 .output
 .vercel
 .netlify
-.wrangler
 /.svelte-kit
 /build
 
@@ -17,6 +16,11 @@ Thumbs.db
 .env.*
 !.env.example
 !.env.test
+.dev.vars
+
+# Cloudflare
+/.wrangler
+/wrangler.dev.json
 
 # Vite
 vite.config.js.timestamp-*
