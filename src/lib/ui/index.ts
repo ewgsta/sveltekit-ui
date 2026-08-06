@@ -21,3 +21,5 @@ export { default as Avatar } from './components/Avatar.svelte';
 export { default as AvatarFallback } from './components/AvatarFallback.svelte';
 export { default as Select } from './components/Select.svelte';
 export { default as Tooltip } from './components/Tooltip.svelte';
+export { default as Dialog } from './components/Dialog.svelte';
+export { default as Alert } from './components/Alert.svelte';
