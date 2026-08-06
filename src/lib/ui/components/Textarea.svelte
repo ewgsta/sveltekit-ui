@@ -8,7 +8,7 @@
 	}: HTMLTextareaAttributes & { rows?: number } = $props();
 </script>
 
-<textarea class={`textarea ${className}`} {rows} {...rest} />
+<textarea class={`textarea ${className}`} {rows} {...rest}></textarea>
 
 <style>
 	.textarea {

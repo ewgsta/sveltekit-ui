@@ -7,7 +7,7 @@
 		size = 'default',
 		class: className = '',
 		...rest
-	}: HTMLInputAttributes & { size?: Size } = $props();
+	}: Omit<HTMLInputAttributes, 'size'> & { size?: Size } = $props();
 </script>
 
 <input class={`input input--${size} ${className}`} {...rest} />
